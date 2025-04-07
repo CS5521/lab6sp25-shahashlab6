@@ -7,6 +7,8 @@
 #include "proc.h"
 #include "spinlock.h"
 
+int fork_counter = 0;
+
 struct {
   struct spinlock lock;
   struct proc proc[NPROC];
@@ -184,6 +186,7 @@ fork(void)
   struct proc *np;
   struct proc *curproc = myproc();
 
+
   // Allocate process.
   if((np = allocproc()) == 0){
     return -1;
@@ -217,6 +220,8 @@ fork(void)
   np->state = RUNNABLE;
 
   release(&ptable.lock);
+
+  fork_counter++;
 
   return pid;
 }

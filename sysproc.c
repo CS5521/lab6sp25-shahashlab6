@@ -7,10 +7,39 @@
 #include "mmu.h"
 #include "proc.h"
 
+extern int fork_counter;
+
+int 
+sys_fkc(void)
+{
+int flag;
+
+if(argint(0, &flag) < 0)
+{
+return -1;
+}
+
+if(flag ==0)
+{
+fork_counter = 0;
+return 0;
+}
+
+return fork_counter;
+}
+
+
 int
 sys_fork(void)
 {
   return fork();
+}
+
+int 
+sys_hw(void)
+{
+cprintf("hello world!\n");
+return 0;
 }
 
 int
